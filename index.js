@@ -44,7 +44,8 @@ db.sequelize.sync().then(res => {
 //Load all routes
 
 // const userRoutes = require('./routes/user.route');
-const authRoutes = require('./routes/auth.route');
+const authRoutes = require('./routes/auth.routes');
+const eventsRoutes = require('./routes/events.routes');
 
 
 
@@ -52,6 +53,7 @@ const authRoutes = require('./routes/auth.route');
 
 // app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/events', eventsRoutes);
 
 app.use('/', (req, res, next) => {
   res.status(200).send('Well connected 😀');

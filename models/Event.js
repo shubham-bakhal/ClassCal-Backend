@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define('Event', {
-    Teacher: {
-      type: DataTypes.STRING,
+    TeacherId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
     Batch: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(['Comp 1', 'Comp 2', 'Comp 3', 'Mech 1', 'Mech 2', 'Mech 3']),
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -16,13 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     Note: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'Teacher',
-      validate: {
-        notEmpty: true,
-      },
     },
-    Date: {
+
+    from: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
@@ -30,8 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true,
       },
     },
-    from: { type: DataTypes.DATE, },
-    to: { type: DataTypes.DATE, }
+    to: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isDate: true,
+      },
+    },
   });
 
   return Event;
