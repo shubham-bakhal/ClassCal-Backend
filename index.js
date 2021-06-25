@@ -21,7 +21,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://elastic-meitner-5d80ad.netlify.app',
+      'https://class-calender.netlify.app',
     ],
     credentials: true,
     exposedHeaders: ['set-cookie'],
