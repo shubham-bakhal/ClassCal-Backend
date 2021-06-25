@@ -7,7 +7,7 @@ require('dotenv').config({ path: './config/config.env' });
 require('dotenv').config({ path: './config/config.env' });
 const session = require('./middlewares/session');
 const { Event, User } = require('./models');
-const ApiError = require('./Errorhandler/APIerror');
+const ApiError = require('./ErrorHandler/APIerror');
 const apiErrorHandler = require('./middlewares/api_error_handling');
 
 // APP
