@@ -16,8 +16,7 @@ module.exports.AvailableTeachers = async (req, res, next) => {
       return next(new ApiError(422, firstError));
     } else {
       const teachers = await User.findAll({
-        returning: true,
-        plain: true,
+    
         attributes: ['id', 'firstName', 'lastName'],
         include: [
           {
@@ -66,8 +65,7 @@ module.exports.searchTeacherForEvent = async (req, res, next) => {
       return next(new ApiError(422, firstError));
     } else {
       const teachers = await User.findOne({
-        returning: true,
-        plain: true,
+     
         attributes: ['id', 'firstName', 'lastName'],
         include: [
           {

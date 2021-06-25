@@ -11,8 +11,7 @@ module.exports.Events = async (req, res, next) => {
            as: 'Teacher',
            attributes: ['id', 'firstName', 'lastName'], }
       ],
-      returning: true,
-          plain: true,
+    
     });
 
     res.json(data).status(200);
@@ -34,8 +33,7 @@ module.exports.todaysEvents = async (req, res, next) => {
         
       },
       include: [{ model: User, as: 'Teacher',  attributes: ['id', 'firstName', 'lastName'] }],
-      returning: true,
-          plain: true,
+ 
     });
     res.json(Events).status(200);
   } catch (error) {
@@ -93,8 +91,6 @@ module.exports.updateEvent = async (req, res, next) => {
           where: {
             id,
           },
-          returning: true,
-          plain: true,
         }
       );
 
