@@ -7,11 +7,12 @@ module.exports.Events = async (req, res, next) => {
   try {
     let data = await Event.findAll({
       include: [
-        { model: User,
-           as: 'Teacher',
-           attributes: ['id', 'firstName', 'lastName'], }
+        {
+          model: User,
+          as: 'Teacher',
+          attributes: ['id', 'firstName', 'lastName'],
+        },
       ],
-    
     });
 
     res.json(data).status(200);
@@ -29,11 +30,14 @@ module.exports.todaysEvents = async (req, res, next) => {
           [Op.lt]: new Date(),
           [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
         },
-   
-        
       },
-      include: [{ model: User, as: 'Teacher',  attributes: ['id', 'firstName', 'lastName'] }],
- 
+      include: [
+        {
+          model: User,
+          as: 'Teacher',
+          attributes: ['id', 'firstName', 'lastName'],
+        },
+      ],
     });
     res.json(Events).status(200);
   } catch (error) {
@@ -76,7 +80,7 @@ module.exports.createEvent = async (req, res, next) => {
 
 module.exports.updateEvent = async (req, res, next) => {
   const { id, TeacherId, Batch, day, Note, from, to } = req.body;
-
+  console.log(id);
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -94,17 +98,19 @@ module.exports.updateEvent = async (req, res, next) => {
         }
       );
 
-      if (isUpdated[1]) {
-        const updatedEvent = await Event.findOne({
-          where: {
-            id,
-          },
-        });
+      const updatedEvent = await Event.findOne({
+        where: {
+          id,
+        },
+      });
+      if (updatedEvent) {
         return res.status(201).json(updatedEvent);
       }
+
       return next(ApiError.badRequest('Event not found'));
     }
   } catch (error) {
+    console.log(error);
     return next(ApiError.badRequest('Validation error'));
   }
 };
@@ -130,7 +136,6 @@ module.exports.deleteEvent = async (req, res, next) => {
       res.status(204).send('deleted');
     }
   } catch (error) {
-    console.log(error);
     return next(ApiError.badRequest('Validation error'));
   }
 };
