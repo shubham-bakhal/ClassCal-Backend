@@ -8,7 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     Batch: {
-      type: DataTypes.ENUM(['Comp 1', 'Comp 2', 'Comp 3', 'Mech 1', 'Mech 2', 'Mech 3']),
+      type: DataTypes.ENUM([
+        'Comp 1',
+        'Comp 2',
+        'Comp 3',
+        'Mech 1',
+        'Mech 2',
+        'Mech 3',
+      ]),
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -17,21 +24,26 @@ module.exports = (sequelize, DataTypes) => {
     Note: {
       type: DataTypes.STRING,
     },
-
-    from: {
+    day: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
-        isDate: true,
+      },
+    },
+
+    from: {
+      type: DataTypes.TIME,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
       },
     },
     to: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
       validate: {
         notEmpty: true,
-        isDate: true,
       },
     },
   });

@@ -102,15 +102,13 @@ module.exports.signUp = async (req, res, next) => {
           user: {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
-            _id: newUser._id,
+            id: newUser.id,
           },
         });
       }
     }
   } catch (error) {
-    if (error.original.errno == 1062) {
-      return next(ApiError.badRequest('User already register'));
-    }
+    console.log(error.message);
     return next(ApiError.InternalServerError('Failed to Signup'));
   }
 };
@@ -137,7 +135,13 @@ module.exports.login = async (req, res, next) => {
 
         if (match) {
           req.session.user = user;
-          return res.status(200).json({ user: user.id });
+          return res.status(200).json({
+            user: {
+              firstName: user.firstName,
+              lastName: user.lastName,
+              id: user.id,
+            },
+          });
         } else {
           res.send('Invalid creadintial').status(204);
         }

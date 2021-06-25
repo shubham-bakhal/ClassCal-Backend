@@ -6,6 +6,7 @@ require('dotenv').config({ path: './config/config.env' });
 // Custom imports
 require('dotenv').config({ path: './config/config.env' });
 const session = require('./middlewares/session');
+const { Event, User } = require('./models');
 // APP
 const app = express();
 
@@ -41,9 +42,14 @@ db.sequelize.sync().then(res => {
   app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 });
 
+
+// Relation
+User.hasMany(Event, {foreignKey: 'TeacherId'});
+Event.belongsTo(User, {foreignKey: 'TeacherId',as: "Teacher"});
+
 //Load all routes
 
-// const userRoutes = require('./routes/user.route');
+const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
 const eventsRoutes = require('./routes/events.routes');
 
@@ -51,7 +57,7 @@ const eventsRoutes = require('./routes/events.routes');
 
 //  Routes
 
-// app.use('/api/user', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventsRoutes);
 
