@@ -1,5 +1,3 @@
-const OTP = require('../models/otpModel');
-
 const RequireLogin = async (req, res, next) => {
   try {
     if (!req.session || !req.session.user) {

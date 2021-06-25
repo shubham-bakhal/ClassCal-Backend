@@ -29,12 +29,12 @@ module.exports = session({
   resave: true,
   unset: 'destroy',
   name: 'sessionId',
-  proxy: true, 
+  proxy: true,
   cookie: {
     secure: true, // if true: only transmit cookie over https
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: 'none',
     path: '/',
-    domain: '.plasmadonationindia.herokuapp.com'
+    domain: '.class-calender.herokuapp.com'
   },
 });

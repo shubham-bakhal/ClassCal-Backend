@@ -1,8 +1,7 @@
 const { User, Event } = require('../models');
-const ApiError = require('../ErrorHandler/APIerror')
+const ApiError = require('../ErrorHandler/APIerror');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
-
 
 module.exports.AvailableTeachers = async (req, res, next) => {
   const { day, from, to } = req.body;
@@ -17,6 +16,8 @@ module.exports.AvailableTeachers = async (req, res, next) => {
       return next(new ApiError(422, firstError));
     } else {
       const teachers = await User.findAll({
+        returning: true,
+        plain: true,
         attributes: ['id', 'firstName', 'lastName'],
         include: [
           {
@@ -65,6 +66,9 @@ module.exports.searchTeacherForEvent = async (req, res, next) => {
       return next(new ApiError(422, firstError));
     } else {
       const teachers = await User.findOne({
+        returning: true,
+        plain: true,
+        attributes: ['id', 'firstName', 'lastName'],
         include: [
           {
             model: Event,

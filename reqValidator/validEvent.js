@@ -10,7 +10,9 @@ exports.validCreteEvent = [
     'Mech 2',
     'Mech 3',
   ]),
-
+  check('day', 'Day is required'),
+  check('from', 'From time is required'),
+  check('to', 'End time is required'),
   check('Note', 'Max lenght of note is 255')
     .optional()
     .isLength({

@@ -1,12 +1,18 @@
 const { Event, User } = require('../models');
 const ApiError = require('../ErrorHandler/APIerror');
 const { validationResult } = require('express-validator');
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
 module.exports.Events = async (req, res, next) => {
   try {
     let data = await Event.findAll({
-      include: [{ model: User, as: 'Teacher' }],
+      include: [
+        { model: User,
+           as: 'Teacher',
+           attributes: ['id', 'firstName', 'lastName'], }
+      ],
+      returning: true,
+          plain: true,
     });
 
     res.json(data).status(200);
@@ -18,19 +24,19 @@ module.exports.Events = async (req, res, next) => {
 
 module.exports.todaysEvents = async (req, res, next) => {
   try {
- 
     let Events = await Event.findAll({
-      where: {day: {
-        [Op.lt]: new Date(),
-        [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
-      }},
-      include: [{ model: User, as: 'Teacher' }],
+      where: {
+        day: {
+          [Op.lt]: new Date(),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
+        },
+   
+        
+      },
+      include: [{ model: User, as: 'Teacher',  attributes: ['id', 'firstName', 'lastName'] }],
+      returning: true,
+          plain: true,
     });
-
-    // const Events = Event.findAll({
-    //   where: sequelize.where(sequelize.fn('date', sequelize.col('day')), '=', '2021-06-24')
-    // })
-
     res.json(Events).status(200);
   } catch (error) {
     console.log(error);
@@ -65,8 +71,8 @@ module.exports.createEvent = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.log(error);
-    return next(ApiError.badRequest('Validation error'));
+    console.log(error.message);
+    return next(ApiError.badRequest(error.message));
   }
 };
 
@@ -76,13 +82,11 @@ module.exports.updateEvent = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('still errors in req validator');
       const firstError = errors
         .array()
         .map(error => ({ [error.param]: error.msg }));
       return next(new ApiError(422, firstError));
     } else {
-      console.log('else part');
       const isUpdated = await Event.update(
         { TeacherId, Batch, Note, day, from, to },
         {
@@ -94,7 +98,7 @@ module.exports.updateEvent = async (req, res, next) => {
         }
       );
 
-      if (isUpdated) {
+      if (isUpdated[1]) {
         const updatedEvent = await Event.findOne({
           where: {
             id,
@@ -105,7 +109,6 @@ module.exports.updateEvent = async (req, res, next) => {
       return next(ApiError.badRequest('Event not found'));
     }
   } catch (error) {
-    console.log(error);
     return next(ApiError.badRequest('Validation error'));
   }
 };

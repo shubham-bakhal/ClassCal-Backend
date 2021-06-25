@@ -5,13 +5,12 @@ const uniqueMessage = error => {
   let output;
   try {
     var fieldName = '';
-    if(error.keyValue.email){
-       fieldName = error.keyValue.email;
+    if (error.keyValue.email) {
+      fieldName = error.keyValue.email;
+    } else if (error.keyValue.contactNumber) {
+      fieldName = error.keyValue.contactNumber;
     }
-    else if(error.keyValue.contactNumber){
-       fieldName = error.keyValue.contactNumber;
-    }
-    
+
     output = 'An account with this ' + fieldName + ' already exists';
   } catch (ex) {
     output = 'User already exists 1';

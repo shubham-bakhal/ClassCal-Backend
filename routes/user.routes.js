@@ -1,11 +1,13 @@
 const router = require('express').Router();
 
 // import controllers
-const { AvailableTeachers,searchTeacherForEvent } = require('../controllers/user.controller');
+const {
+  AvailableTeachers,
+  searchTeacherForEvent,
+} = require('../controllers/user.controller');
 
 // actual routes
-router.post('/availableTeachers', AvailableTeachers );
-router.post('/searchTeacherForEvent', searchTeacherForEvent );
-
+router.post('/availableTeachers', AvailableTeachers);
+router.post('/searchTeacherForEvent', searchTeacherForEvent);
 
 module.exports = router;
