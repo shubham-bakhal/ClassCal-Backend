@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 // Req validator
 const { validCreteEvent } = require('../reqValidator/validEvent');
-const { RequireLogin } = require('../middlewares/authMiddleware');
+const { RequireLogin,RequireAdmin } = require('../middlewares/authMiddleware');
 // import controllers
 const {
   createEvent,
@@ -13,10 +13,22 @@ const {
 } = require('../controllers/events.Controller');
 
 // actual routes
-router.post('/create', RequireLogin, validCreteEvent,createEvent);
+router.post(
+  '/create',
+  RequireLogin,
+  RequireAdmin,
+  validCreteEvent,
+  createEvent
+);
 router.get('/Events', Events);
-router.delete('/delete', RequireLogin, deleteEvent);
-router.patch('/update', RequireLogin,validCreteEvent, updateEvent);
+router.delete('/delete', RequireLogin, RequireAdmin, deleteEvent);
+router.patch(
+  '/update',
+  RequireLogin,
+  RequireAdmin,
+  validCreteEvent,
+  updateEvent
+);
 router.get('/todaysEvents', todaysEvents);
 
 module.exports = router;
