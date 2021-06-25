@@ -1,5 +1,5 @@
 const { Event, User } = require('../models');
-const ApiError = require('../Errorhandler/APIError');
+const ApiError = require('../ErrorHandler/APIerror');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 
