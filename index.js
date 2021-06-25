@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://elastic-meitner-5d80ad.netlify.app'],
     credentials: true,
     exposedHeaders: ['set-cookie'],
   })
