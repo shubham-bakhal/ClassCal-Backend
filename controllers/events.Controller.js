@@ -2,6 +2,7 @@ const { Event, User } = require('../models');
 const ApiError = require('../Errorhandler/APIError');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
+
 module.exports.Events = async (req, res, next) => {
   try {
     let data = await Event.findAll({

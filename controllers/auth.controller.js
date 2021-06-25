@@ -2,6 +2,7 @@ const { User } = require('../models');
 const ApiError = require('../Errorhandler/APIError');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 
 // const nodemailer = require('nodemailer');

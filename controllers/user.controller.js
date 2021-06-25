@@ -3,6 +3,7 @@ const ApiError = require('../ErrorHandler/APIError')
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
 
+
 module.exports.AvailableTeachers = async (req, res, next) => {
   const { day, from, to } = req.body;
   console.log(day, from, to);
