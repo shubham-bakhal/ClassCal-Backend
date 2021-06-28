@@ -27,8 +27,8 @@ module.exports.todaysEvents = async (req, res, next) => {
     let Events = await Event.findAll({
       where: {
         day: {
-          [Op.lt]: new Date() + 24 * 60 * 60 * 1000,
-          [Op.gt]: new Date(new Date()),
+          [Op.lt]: new Date(new Date()),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
         },
       },
       include: [
