@@ -58,9 +58,11 @@ module.exports.login = async (req, res, next) => {
         },
       });
 
+      console.log(user);
+
       if (user) {
         const match = await bcrypt.compare(password, user.hashedPassword);
-
+        console.log(match);
         if (match) {
           req.session.user = user;
           return res.status(200).json({
