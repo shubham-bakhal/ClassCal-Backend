@@ -21,7 +21,6 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://class-calender.netlify.app',
       'https://classcalendar.netlify.app'
     ],
     credentials: true,
